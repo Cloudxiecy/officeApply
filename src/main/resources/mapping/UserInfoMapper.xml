@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.UserInfo" >
+    <id column="USERID" property="userid" jdbcType="VARCHAR" />
+    <result column="FULLNAME" property="fullname" jdbcType="VARCHAR" />
+    <result column="ORGANIZEID" property="organizeid" jdbcType="VARCHAR" />
+    <result column="ORGANIZENAME" property="organizename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USERID, FULLNAME, ORGANIZEID, ORGANIZENAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bo_userinfo
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bo_userinfo
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.UserInfo" >
+    insert into bo_userinfo (USERID, FULLNAME, ORGANIZEID, 
+      ORGANIZENAME)
+    values (#{userid,jdbcType=VARCHAR}, #{fullname,jdbcType=VARCHAR}, #{organizeid,jdbcType=VARCHAR}, 
+      #{organizename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.UserInfo" >
+    insert into bo_userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="fullname != null" >
+        FULLNAME,
+      </if>
+      <if test="organizeid != null" >
+        ORGANIZEID,
+      </if>
+      <if test="organizename != null" >
+        ORGANIZENAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null" >
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeid != null" >
+        #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="organizename != null" >
+        #{organizename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.UserInfo" >
+    update bo_userinfo
+    <set >
+      <if test="fullname != null" >
+        FULLNAME = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeid != null" >
+        ORGANIZEID = #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="organizename != null" >
+        ORGANIZENAME = #{organizename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.UserInfo" >
+    update bo_userinfo
+    set FULLNAME = #{fullname,jdbcType=VARCHAR},
+      ORGANIZEID = #{organizeid,jdbcType=VARCHAR},
+      ORGANIZENAME = #{organizename,jdbcType=VARCHAR}
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>
